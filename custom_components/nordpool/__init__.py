@@ -172,6 +172,9 @@ async def _dry_setup(hass: HomeAssistant, config: ConfigType) -> bool:
                     if tomorrow.get(area, {}).get("values"):
                         today[area] = tomorrow.pop(area)
                     else:
+                        # Drop yesterday's prices so they are not shown as
+                        # today's if the refresh below fails.
+                        today.pop(area, None)
                         tomorrow.pop(area, None)
                         refresh_today = True
 

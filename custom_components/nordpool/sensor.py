@@ -446,6 +446,9 @@ class NordpoolSensor(SensorEntity):
         if areas is not None and self._area not in areas:
             return
         _LOGGER.debug("handle_new_day")
+        # Yesterday's prices must not be shown as today's if the new day's
+        # prices could not be fetched.
+        self._data_today = None
         self._data_tomorrow = None
         # update attrs for the new day
         await self.handle_new_hr()
